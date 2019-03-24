@@ -151,7 +151,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="gotoxy.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="wait.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="a_Such_Algorithmus.cpp" />
