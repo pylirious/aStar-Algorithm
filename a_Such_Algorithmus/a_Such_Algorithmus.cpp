@@ -114,7 +114,7 @@ int main() {
 
 
 	while (true) {
-		//wait_milliseconds(10);
+		wait_milliseconds(10);
 		if (playfield[player.posX][player.posY + 1] != SQUARE_CODE && !isIn(player.posX, player.posY + 1)) {
 			add(player.posX, player.posY + 1, closed[actually].toStart, player.posX, player.posY);
 			maxOpen++;
