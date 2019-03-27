@@ -36,9 +36,11 @@ char playfield[100][100] = {
 };
 
 void main() {
+	float bTime = clock();
 	AStar *pathfinding = new AStar(playfield);
 	if (pathfinding->find()) {
 
 	}
 	pathfinding->gotoxy(0, 100);
+	std::cout << clock() - bTime;
 }

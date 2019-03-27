@@ -2,11 +2,10 @@
 #include "AStar.h"
 
 AStar::AStar(char playfield[][MAX_HEIGHT]) {
-	int i, j;
 	// Belegung des Arrays spielfeld
-	for (i = 0; i < MAX_HEIGHT; i++)
+	for (int i = 0; i < MAX_HEIGHT; i++)
 	{
-		for (j = 0; j < MAX_WIDTH; j++)
+		for (int j = 0; j < MAX_WIDTH; j++)
 		{
 			AStar::playfield[j][i] = playfield[j][i];
 		}
@@ -30,9 +29,8 @@ void AStar::add(Player player, int nx, int ny) {
 	open[i] = placeHolder;
 
 	open[i].toStart = player.toStart + 1;
-	//open[i].toStart = sqrt(((start.x - open[i].x) * (start.x - open[i].x)) + ((start.y - open[i].y) * (start.y - open[i].y)));
-	open[i].toEnd = sqrt(((end.x - open[i].x) * (end.x - open[i].x)) + ((end.y - open[i].y) * (end.y - open[i].y)));
-	//open[i].toEnd = abs((end.x - open[i].x) + (end.y - open[i].y));
+	open[i].toEnd = sqrt(((end.x - open[i].x) * (end.x - open[i].x)) + ((end.y - open[i].y) * (end.y - open[i].y)));	//Luftlinie zum Ziel
+	//open[i].toEnd = abs((end.x - open[i].x) + (end.y - open[i].y));				//X + Y Abstand Variation
 	open[i].value = open[i].toStart + open[i].toEnd;
 	open[i].belegt = 1;
 	open[i].xB = player.posX;
@@ -74,11 +72,10 @@ bool AStar::isIn(int x, int y) {
 
 void AStar::zeichne_spielfeld()
 {
-	int i, j;
 	// Belegung des Arrays spielfeld
-	for (i = 0; i < MAX_HEIGHT; i++)
+	for (int i = 0; i < MAX_HEIGHT; i++)
 	{
-		for (j = 0; j < MAX_WIDTH; j++)
+		for (int j = 0; j < MAX_WIDTH; j++)
 		{
 			//SCHAUEN
 			gotoxy(i, j);
@@ -113,7 +110,6 @@ Point AStar::findBestes()
 
 void AStar::backtrack() {
 	Point point;
-	int g;
 	closed[0].belegt = 1;
 	for (int i = 0; i < (tryit) / 2; i++) {
 		if (closed[i].belegt == 0) {
@@ -139,10 +135,6 @@ void AStar::backtrack() {
 
 bool AStar::find() {
 	zeichne_spielfeld();
-	int actual = 1;
-	
-
-
 
 	start.x = 1;
 	start.y = 1;
@@ -151,9 +143,6 @@ bool AStar::find() {
 
 	end.x = 3;
 	end.y = 70;
-
-
-
 
 	Player player;
 	player.posX = start.x;
@@ -165,31 +154,26 @@ bool AStar::find() {
 	closed[1] = start;
 
 	int actually = 1;
-	int maxOpen = 0;
 
 	Point blank;
 
 
 	gotoxy(start.x, start.y);
-	printf("%c", 's');
+	printf("%c", 219);
 	gotoxy(end.x, end.y);
-	printf("%c", 'z');
+	printf("%c", 219);
 
 
 	while (true) {
 		wait_milliseconds(10);
 		if (playfield[player.posX][player.posY + 1] != SQUARE_CODE && !isIn(player.posX, player.posY + 1)) {
 			add(player, player.posX, player.posY + 1);
-			maxOpen++;
 		}if (playfield[player.posX][player.posY - 1] != SQUARE_CODE && !isIn(player.posX, player.posY - 1)) {
 			add(player, player.posX, player.posY - 1);
-			maxOpen++;
 		}if (playfield[player.posX - 1][player.posY] != SQUARE_CODE && !isIn(player.posX - 1, player.posY)) {
 			add(player, player.posX - 1, player.posY);
-			maxOpen++;
 		}if (playfield[player.posX + 1][player.posY] != SQUARE_CODE && !isIn(player.posX + 1, player.posY)) {
 			add(player, player.posX + 1, player.posY);
-			maxOpen++;
 		}
 		gotoxy(player.posX, player.posY);
 		printf("%c", BLANK_CODE);
@@ -197,7 +181,6 @@ bool AStar::find() {
 		sort((tryit));
 
 		if (open[0].belegt == 0 && open[1].belegt == 0) {
-			printf("Verloren");
 			return false;
 		}
 
