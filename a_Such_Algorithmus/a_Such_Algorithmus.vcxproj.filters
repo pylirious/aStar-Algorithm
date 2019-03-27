@@ -24,12 +24,18 @@
     <ClInclude Include="gotoxy.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
+    <ClInclude Include="AStar.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
     <ClCompile Include="a_Such_Algorithmus.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="AStar.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>
