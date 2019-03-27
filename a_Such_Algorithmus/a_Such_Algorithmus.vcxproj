@@ -152,13 +152,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="AStar.h" />
-    <ClInclude Include="gotoxy.h" />
+    <ClInclude Include="MazeGenerator.h" />
     <ClInclude Include="pch.h" />
-    <ClInclude Include="wait.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AStar.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MazeGenerator.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

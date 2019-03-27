@@ -18,13 +18,10 @@
     <ClInclude Include="pch.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="wait.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="gotoxy.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
     <ClInclude Include="AStar.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="MazeGenerator.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
   </ItemGroup>
@@ -36,6 +33,9 @@
       <Filter>Quelldateien</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="MazeGenerator.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>
