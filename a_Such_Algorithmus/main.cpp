@@ -3,9 +3,9 @@
 
 #include "pch.h"
 #include "AStar.h"
+#include "MazeGenerator.h"
 
-
-char playfield[100][100] = {
+char playfield[50][50] = {};/* = {
 
 "	aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa ",
 "a   a               a               a           a                   a   a",
@@ -33,15 +33,19 @@ char playfield[100][100] = {
 
 
 
-};
+};*/
 
 int main() {
+	system("cls");
+	
 	float bTime = clock();
-	AStar *pathfinding = new AStar(playfield);
-	if (pathfinding->find()) {
+	MazeGenerator generator;
+	generator.create(playfield);
+	AStar finder(playfield);
+	if (finder.find()) {
 
 	}
-	pathfinding->gotoxy(0, 100);
+	finder.gotoxy(100, 100);
 	std::cout << clock() - bTime;
 	return 1;
 }

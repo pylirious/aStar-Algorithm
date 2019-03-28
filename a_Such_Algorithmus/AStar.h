@@ -19,8 +19,8 @@ struct Player {
 
 class AStar {
 public:
-	static const int MAX_HEIGHT = 100;
-	static const int MAX_WIDTH = 100;
+	static const int MAX_HEIGHT = 50;
+	static const int MAX_WIDTH = 50;
 	int tryit = MAX_WIDTH * MAX_HEIGHT / 2 - 1;
 
 	AStar(char playfield[][MAX_HEIGHT]);

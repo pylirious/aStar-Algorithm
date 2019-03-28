@@ -7,7 +7,7 @@ AStar::AStar(char playfield[][MAX_HEIGHT]) {
 	{
 		for (int j = 0; j < MAX_WIDTH; j++)
 		{
-			AStar::playfield[j][i] = playfield[j][i];
+			this->playfield[j][i] = playfield[j][i];
 		}
 	}
 }
@@ -141,8 +141,8 @@ bool AStar::find() {
 	start.belegt = 1;
 
 
-	end.x = 3;
-	end.y = 70;
+	end.x = 48;
+	end.y = 48;
 
 	Player player;
 	player.posX = start.x;
