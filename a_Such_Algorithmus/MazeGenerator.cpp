@@ -107,7 +107,7 @@ void MazeGenerator::create(char playfield[MazeGenerator::MAX][MazeGenerator::MAX
 				playfield[x][y] = feld;
 				
 				counter++;
-				if (counter == 10) {
+				if (counter == 5) {
 					stay = false;
 				}
 
