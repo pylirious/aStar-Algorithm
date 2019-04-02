@@ -1,5 +1,6 @@
 #pragma once
 
+#include "MazeGenerator.h"
 #include <math.h>
 #include <iostream>
 #include <Windows.h>
@@ -8,7 +9,7 @@
 struct Point {
 	int x = 0, y = 0, belegt = 0;
 	float value = 0, toStart = 0, toEnd = 0;
-	int xB, yB;
+	int xB = 0, yB = 0;
 
 };
 
@@ -19,11 +20,10 @@ struct Player {
 
 class AStar {
 public:
-	static const int MAX_HEIGHT = 50;
-	static const int MAX_WIDTH = 50;
-	int tryit = MAX_WIDTH * MAX_HEIGHT / 2 - 1;
 
-	AStar(char playfield[][MAX_HEIGHT]);
+	int tryit = MazeGenerator::MAX * MazeGenerator::MAX / 2 - 1;
+
+	AStar(char playfield[MazeGenerator::MAX][MazeGenerator::MAX]);
 
 	static const int SQUARE_CODE = 'a';
 	static const char BLANK_CODE = ' ';
@@ -40,9 +40,9 @@ public:
 	void wait_milliseconds(int d_milliseconds);
 
 private:
-	Point open[(MAX_WIDTH * MAX_HEIGHT) / 2];
-	Point closed[(MAX_WIDTH * MAX_HEIGHT) / 2];
+	Point open[(MazeGenerator::MAX * MazeGenerator::MAX) / 2];
+	Point closed[(MazeGenerator::MAX * MazeGenerator::MAX) / 2];
 	Point start;
 	Point end;
-	char playfield[MAX_WIDTH][MAX_HEIGHT];
+	char playfield[MazeGenerator::MAX][MazeGenerator::MAX];
 };

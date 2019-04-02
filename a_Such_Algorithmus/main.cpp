@@ -5,7 +5,7 @@
 #include "AStar.h"
 #include "MazeGenerator.h"
 
-char playfield[50][50] = {};/* = {
+char playfield[MazeGenerator::MAX][MazeGenerator::MAX] = {};/* = {
 
 "	aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa ",
 "a   a               a               a           a                   a   a",
@@ -38,7 +38,7 @@ char playfield[50][50] = {};/* = {
 int main() {
 	system("cls");
 	
-	float bTime = clock();
+	int bTime = clock();
 	MazeGenerator generator;
 	generator.create(playfield);
 	AStar finder(playfield);

@@ -1,3 +1,4 @@
+#pragma once
 // Remembering to define _CRT_RAND_S prior  
 // to inclusion statement.  
 

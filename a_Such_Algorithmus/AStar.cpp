@@ -1,11 +1,11 @@
 #include "pch.h"
 #include "AStar.h"
 
-AStar::AStar(char playfield[][MAX_HEIGHT]) {
+AStar::AStar(char playfield[MazeGenerator::MAX][MazeGenerator::MAX]) {
 	// Belegung des Arrays spielfeld
-	for (int i = 0; i < MAX_HEIGHT; i++)
+	for (int i = 0; i < MazeGenerator::MAX; i++)
 	{
-		for (int j = 0; j < MAX_WIDTH; j++)
+		for (int j = 0; j < MazeGenerator::MAX; j++)
 		{
 			this->playfield[j][i] = playfield[j][i];
 		}
@@ -50,7 +50,7 @@ void AStar::sort(int length) {
 		if ((open[i].belegt == 0 && open[i + 1].belegt != 0) || (open[i].value > open[i + 1].value && open[i + 1].belegt != 0) || (open[i].value == open[i + 1].value && open[i].toEnd > open[i + 1].toEnd)) {
 			
 			swap(i, i + 1);
-			flag + 1;
+			flag++;
 
 		}
 	}
@@ -73,9 +73,9 @@ bool AStar::isIn(int x, int y) {
 void AStar::zeichne_spielfeld()
 {
 	// Belegung des Arrays spielfeld
-	for (int i = 0; i < MAX_HEIGHT; i++)
+	for (int i = 0; i < MazeGenerator::MAX; i++)
 	{
-		for (int j = 0; j < MAX_WIDTH; j++)
+		for (int j = 0; j < MazeGenerator::MAX; j++)
 		{
 			//SCHAUEN
 			gotoxy(i, j);

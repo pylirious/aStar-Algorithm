@@ -1,8 +1,8 @@
 #include "pch.h"
-#include "random.h"
 #include "MazeGenerator.h"
+#include "random.h"
 MazeGenerator::MazeGenerator() {
-
+	
 }
 
 void MazeGenerator::create(char playfield[MazeGenerator::MAX][MazeGenerator::MAX])
@@ -30,7 +30,7 @@ void MazeGenerator::create(char playfield[MazeGenerator::MAX][MazeGenerator::MAX
 	
 	
 
-	int rX, rY, rR, x, y, dx ,dy;
+	int rX, rY, rR, x, y, dx = 0 ,dy = 0;
 
 	int time = clock();
 	while (clock() - time < 3000) {	//Edit to time stamp
@@ -107,7 +107,7 @@ void MazeGenerator::create(char playfield[MazeGenerator::MAX][MazeGenerator::MAX
 				playfield[x][y] = feld;
 				
 				counter++;
-				if (counter == 5) {
+				if (counter == 60) {
 					stay = false;
 				}
 
