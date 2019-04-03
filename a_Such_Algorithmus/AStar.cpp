@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "AStar.h"
 
+
 AStar::AStar(char playfield[MazeGenerator::MAX][MazeGenerator::MAX]) {
 	// Belegung des Arrays spielfeld
 	for (int i = 0; i < MazeGenerator::MAX; i++)
@@ -141,8 +142,8 @@ bool AStar::find() {
 	start.belegt = 1;
 
 
-	end.x = 48;
-	end.y = 48;
+	end.x = MazeGenerator::MAX - 2;
+	end.y = MazeGenerator::MAX - 2;
 
 	Player player;
 	player.posX = start.x;
@@ -158,14 +159,14 @@ bool AStar::find() {
 	Point blank;
 
 
-	gotoxy(start.x, start.y);
+	/*gotoxy(start.x, start.y);
 	printf("%c", 219);
 	gotoxy(end.x, end.y);
-	printf("%c", 219);
+	printf("%c", 219);*/
 
 
 	while (true) {
-		wait_milliseconds(10);
+		//wait_milliseconds(10);
 		if (playfield[player.posX][player.posY + 1] != SQUARE_CODE && !isIn(player.posX, player.posY + 1)) {
 			add(player, player.posX, player.posY + 1);
 		}if (playfield[player.posX][player.posY - 1] != SQUARE_CODE && !isIn(player.posX, player.posY - 1)) {
@@ -175,8 +176,8 @@ bool AStar::find() {
 		}if (playfield[player.posX + 1][player.posY] != SQUARE_CODE && !isIn(player.posX + 1, player.posY)) {
 			add(player, player.posX + 1, player.posY);
 		}
-		gotoxy(player.posX, player.posY);
-		printf("%c", BLANK_CODE);
+		/*gotoxy(player.posX, player.posY);
+		printf("%c", BLANK_CODE);*/
 
 		sort((tryit));
 
@@ -193,8 +194,8 @@ bool AStar::find() {
 		actually++;
 
 
-		gotoxy(player.posX, player.posY);
-		printf("*");
+		/*gotoxy(player.posX, player.posY);
+		printf("*");*/
 
 		if (player.posX == end.x && player.posY == end.y) {
 			backtrack();

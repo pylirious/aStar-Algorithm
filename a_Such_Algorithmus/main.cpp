@@ -4,6 +4,7 @@
 #include "pch.h"
 #include "AStar.h"
 #include "MazeGenerator.h"
+#include "RandomPathFinder.h"
 
 char playfield[MazeGenerator::MAX][MazeGenerator::MAX] = {};/* = {
 
@@ -36,16 +37,26 @@ char playfield[MazeGenerator::MAX][MazeGenerator::MAX] = {};/* = {
 };*/
 
 int main() {
+
+
+
+
 	system("cls");
 	
-	int bTime = clock();
 	MazeGenerator generator;
 	generator.create(playfield);
+
+	RandomPathFinder randFinder(playfield);
+	int randTime = randFinder.find();
+	MazeGenerator::gotoxy( MazeGenerator::MAX + 3, 3);
+	std::cout << randTime << " MiliSec.";
+	std::cin.ignore();
+
+
 	AStar finder(playfield);
 	if (finder.find()) {
 
 	}
-	finder.gotoxy(100, 100);
-	std::cout << clock() - bTime;
+
 	return 1;
 }

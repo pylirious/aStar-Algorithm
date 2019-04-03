@@ -1,6 +1,17 @@
 #include "pch.h"
+//#include "random.h"
 #include "MazeGenerator.h"
-#include "random.h"
+#include <random>
+
+int MazeGenerator::random(int min, int max) {
+	std::random_device dev;
+	std::mt19937 rng(dev());
+	std::uniform_int_distribution<std::mt19937::result_type> dist6(min, max);
+	dist6(rng); dist6(rng); dist6(rng); dist6(rng); dist6(rng); dist6(rng); dist6(rng); dist6(rng);
+	return dist6(rng);
+}
+
+
 MazeGenerator::MazeGenerator() {
 	
 }
@@ -10,7 +21,10 @@ void MazeGenerator::create(char playfield[MazeGenerator::MAX][MazeGenerator::MAX
 	bool stay = true;
 	int counter;
 	int blank = ' ';
-	int feld = 'a';
+	char feld = 'a';
+
+	std::cout << feld;
+	
 
 	for (int i = 0; i < this->MAX; i++)
 	{
@@ -23,20 +37,34 @@ void MazeGenerator::create(char playfield[MazeGenerator::MAX][MazeGenerator::MAX
 
 	for (int i = 0; i < this->MAX; i++) {
 		playfield[i][this->MAX -1] = feld;
+		gotoxy(i, this->MAX - 1);
+		printf("%c", 219);
 		playfield[i][0] = feld;
+		gotoxy(i, 0);
+		printf("%c", 219);
 		playfield[this->MAX -1][i] = feld;
+		gotoxy(this->MAX - 1, i);
+		printf("%c", 219);
 		playfield[0][i] = feld;
+		gotoxy(0, i);
+		printf("%c", 219);
 	}
 	
 	
 
-	int rX, rY, rR, x, y, dx = 0 ,dy = 0;
+	int rX= 0, rY = 0, rR = 0, x, y, dx = 0 ,dy = 0;
 
 	int time = clock();
-	while (clock() - time < 3000) {	//Edit to time stamp
-		rR = getrandom_int(0, 3);
+	while (clock() - time < MAX * 120) {	//Edit to time stamp
+
+		rR = random(0, 3);
+		rX = random(0, this->MAX -1);
+		rY = random(0, this->MAX -1);
+		
+
+		/*rR = getrandom_int(0, 3);
 		rX = getrandom_int(0, this->MAX -1);
-		rY = getrandom_int(0, this->MAX -1);
+		rY = getrandom_int(0, this->MAX -1);*/
 
 		x = rX;
 		y = rY;
@@ -107,7 +135,13 @@ void MazeGenerator::create(char playfield[MazeGenerator::MAX][MazeGenerator::MAX
 				playfield[x][y] = feld;
 				
 				counter++;
-				if (counter == 60) {
+
+
+				gotoxy(x, y);
+				printf("%c", 219);
+				wait_milliseconds(1);
+
+				if (counter == MAX * 0.5) {
 					stay = false;
 				}
 
@@ -129,3 +163,9 @@ void MazeGenerator::gotoxy(int x, int y)
 	SetConsoleCursorPosition(hCon, pos);
 }
 
+void MazeGenerator::wait_milliseconds(int d_milliseconds) 		/* Zeitverzoegerung */
+{
+	clock_t endwait;
+	endwait = clock() + d_milliseconds * CLK_TCK / 1000;
+	while (clock() < endwait) {}
+}

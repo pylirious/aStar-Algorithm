@@ -21,7 +21,7 @@ struct Player {
 class AStar {
 public:
 
-	int tryit = MazeGenerator::MAX * MazeGenerator::MAX / 2 - 1;
+	int tryit = MazeGenerator::MAX * MazeGenerator::MAX- 1;
 
 	AStar(char playfield[MazeGenerator::MAX][MazeGenerator::MAX]);
 
@@ -40,8 +40,8 @@ public:
 	void wait_milliseconds(int d_milliseconds);
 
 private:
-	Point open[(MazeGenerator::MAX * MazeGenerator::MAX) / 2];
-	Point closed[(MazeGenerator::MAX * MazeGenerator::MAX) / 2];
+	Point open[(MazeGenerator::MAX * MazeGenerator::MAX)];
+	Point closed[(MazeGenerator::MAX * MazeGenerator::MAX)];
 	Point start;
 	Point end;
 	char playfield[MazeGenerator::MAX][MazeGenerator::MAX];
