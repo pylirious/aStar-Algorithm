@@ -47,9 +47,8 @@ int RandomPathFinder::find() {
 		default:
 			break;
 		}
-
-		/*MazeGenerator::gotoxy(x, y);
-		std::cout << 'a';*/
+		gotoxy(x, y);
+		std::cout << char(219);
 		
 		if (x == MazeGenerator::MAX - 2 && y == MazeGenerator::MAX - 2) {
 			return clock() - timeCounter;

@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "AStar.h"
+#include "friendlyConsole/friendlyConsole.hpp"
 
 
 AStar::AStar(char playfield[MazeGenerator::MAX][MazeGenerator::MAX]) {
@@ -31,7 +32,7 @@ void AStar::add(Player player, int nx, int ny) {
 
 	open[i].toStart = player.toStart + 1;
 	open[i].toEnd = sqrt(((end.x - open[i].x) * (end.x - open[i].x)) + ((end.y - open[i].y) * (end.y - open[i].y)));	//Luftlinie zum Ziel
-	//open[i].toEnd = abs((end.x - open[i].x) + (end.y - open[i].y));				//X + Y Abstand Variation
+
 	open[i].value = open[i].toStart + open[i].toEnd;
 	open[i].belegt = 1;
 	open[i].xB = player.posX;
@@ -134,7 +135,7 @@ void AStar::backtrack() {
 
 }
 
-bool AStar::find() {
+int AStar::find() {
 	zeichne_spielfeld();
 
 	start.x = 1;
@@ -164,9 +165,9 @@ bool AStar::find() {
 	gotoxy(end.x, end.y);
 	printf("%c", 219);*/
 
-
+	int timerino = clock();
 	while (true) {
-		//wait_milliseconds(10);
+		//wait_milliseconds(1);
 		if (playfield[player.posX][player.posY + 1] != SQUARE_CODE && !isIn(player.posX, player.posY + 1)) {
 			add(player, player.posX, player.posY + 1);
 		}if (playfield[player.posX][player.posY - 1] != SQUARE_CODE && !isIn(player.posX, player.posY - 1)) {
@@ -179,9 +180,12 @@ bool AStar::find() {
 		/*gotoxy(player.posX, player.posY);
 		printf("%c", BLANK_CODE);*/
 
-		sort((tryit));
+		//sort((tryit));
 
-		if (open[0].belegt == 0 && open[1].belegt == 0) {
+		/*if (open[0].belegt == 0 && open[1].belegt == 0) {
+			return false;
+		}*/
+		if (!IsSomethingInThatArray()) {
 			return false;
 		}
 
@@ -199,7 +203,7 @@ bool AStar::find() {
 
 		if (player.posX == end.x && player.posY == end.y) {
 			backtrack();
-			return true;
+			return clock() - timerino;
 		}
 
 	}
@@ -207,18 +211,27 @@ bool AStar::find() {
 
 }
 
-void AStar::gotoxy(int x, int y)
-{
-	HANDLE hCon = GetStdHandle(STD_OUTPUT_HANDLE);
-	COORD pos;
-	pos.X = x;
-	pos.Y = y;
-	SetConsoleCursorPosition(hCon, pos);
-}
+//void AStar::gotoxy(int x, int y)
+//{
+//	HANDLE hCon = GetStdHandle(STD_OUTPUT_HANDLE);
+//	COORD pos;
+//	pos.X = x;
+//	pos.Y = y;
+//	SetConsoleCursorPosition(hCon, pos);
+//}
 
 void AStar::wait_milliseconds(int d_milliseconds) 		/* Zeitverzoegerung */
 {
 	clock_t endwait;
 	endwait = clock() + d_milliseconds * CLK_TCK / 1000;
 	while (clock() < endwait) {}
+}
+
+bool AStar::IsSomethingInThatArray() {
+	for (int i = 0; i < tryit; i++) {
+		if (open[i].belegt == 1) {
+			return true;
+		}
+	}
+	return false;
 }

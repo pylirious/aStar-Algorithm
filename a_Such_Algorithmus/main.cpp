@@ -39,24 +39,28 @@ char playfield[MazeGenerator::MAX][MazeGenerator::MAX] = {};/* = {
 int main() {
 
 
-
+	fc::setWindowSize(1200, 1200);
+	fc::setFontSize(10, 10);
 
 	system("cls");
 	
 	MazeGenerator generator;
 	generator.create(playfield);
+	AStar finder(playfield);
+	int randTime = finder.find();
+	//MazeGenerator::gotoxy( MazeGenerator::MAX + 3, 3);
+	gotoxy( MazeGenerator::MAX + 3, 3);
+	std::cout << "Algorithm Time:" << randTime << " MiliSec.";
+	std::cin.ignore();
 
 	RandomPathFinder randFinder(playfield);
-	int randTime = randFinder.find();
-	MazeGenerator::gotoxy( MazeGenerator::MAX + 3, 3);
-	std::cout << randTime << " MiliSec.";
+	randTime = randFinder.find();
+	//MazeGenerator::gotoxy( MazeGenerator::MAX + 3, 5);
+	gotoxy( MazeGenerator::MAX + 3, 5);
+	std::cout << "Random Time " << randTime << " MiliSec.";
 	std::cin.ignore();
 
 
-	AStar finder(playfield);
-	if (finder.find()) {
-
-	}
 
 	return 1;
 }

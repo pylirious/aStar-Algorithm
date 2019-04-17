@@ -6,18 +6,21 @@
 #include <Windows.h>
 #include <time.h>
 
+
+//struct Point
 struct Point {
 	int x = 0, y = 0, belegt = 0;
 	float value = 0, toStart = 0, toEnd = 0;
 	int xB = 0, yB = 0;
-
+	
 };
-
+//struct Player
 struct Player {
 	int posX, posY;
 	float toStart;
 };
 
+//class AStar algorithm
 class AStar {
 public:
 
@@ -35,9 +38,11 @@ public:
 	void zeichne_spielfeld();
 	Point findBestes();
 	void backtrack();
-	bool find();
-	void gotoxy(int x, int y);
+	int find();
+	//void gotoxy(int x, int y);
 	void wait_milliseconds(int d_milliseconds);
+
+	bool IsSomethingInThatArray();
 
 private:
 	Point open[(MazeGenerator::MAX * MazeGenerator::MAX)];

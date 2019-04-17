@@ -1,7 +1,9 @@
-#include "pch.h"
+#include <pch.h>
 //#include "random.h"
+#include <iostream>
 #include "MazeGenerator.h"
 #include <random>
+#include <time.h>
 
 int MazeGenerator::random(int min, int max) {
 	std::random_device dev;
@@ -61,10 +63,6 @@ void MazeGenerator::create(char playfield[MazeGenerator::MAX][MazeGenerator::MAX
 		rX = random(0, this->MAX -1);
 		rY = random(0, this->MAX -1);
 		
-
-		/*rR = getrandom_int(0, 3);
-		rX = getrandom_int(0, this->MAX -1);
-		rY = getrandom_int(0, this->MAX -1);*/
 
 		x = rX;
 		y = rY;
@@ -154,14 +152,14 @@ void MazeGenerator::create(char playfield[MazeGenerator::MAX][MazeGenerator::MAX
 
 }
 
-void MazeGenerator::gotoxy(int x, int y)
-{
-	HANDLE hCon = GetStdHandle(STD_OUTPUT_HANDLE);
-	COORD pos;
-	pos.X = x;
-	pos.Y = y;
-	SetConsoleCursorPosition(hCon, pos);
-}
+//void MazeGenerator::gotoxy(int x, int y)
+//{
+//	HANDLE hCon = GetStdHandle(STD_OUTPUT_HANDLE);
+//	COORD pos;
+//	pos.X = x;
+//	pos.Y = y;
+//	SetConsoleCursorPosition(hCon, pos);
+//}
 
 void MazeGenerator::wait_milliseconds(int d_milliseconds) 		/* Zeitverzoegerung */
 {

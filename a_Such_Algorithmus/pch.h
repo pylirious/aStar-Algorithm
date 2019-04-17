@@ -11,6 +11,6 @@
 
 #include "AStar.h"
 #include "MazeGenerator.h"
-// TODO: Fügen Sie hier Header hinzu, die vorkompiliert werden sollen.
+// TODO: Fügen Sie hier Header hinzu, die vorkompiliert werden sollen
 
 #endif //PCH_H

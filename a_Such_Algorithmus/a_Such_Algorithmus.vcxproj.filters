@@ -27,6 +27,9 @@
     <ClInclude Include="RandomPathFinder.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
+    <ClInclude Include="friendlyConsole\friendlyConsole.hpp">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -42,6 +45,9 @@
       <Filter>Quelldateien</Filter>
     </ClCompile>
     <ClCompile Include="RandomPathFinder.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="friendlyConsole\friendlyConsole.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>
