@@ -3,8 +3,8 @@
 #include "friendlyConsole/friendlyConsole.hpp"
 
 
-AStar::AStar(char playfield[MazeGenerator::MAX][MazeGenerator::MAX]) {
-	// Belegung des Arrays spielfeld
+AStar::AStar(char playfield[MazeGenerator::MAX][MazeGenerator::MAX])	// Constructor: applies parameter-maze to object-maze
+{
 	for (int i = 0; i < MazeGenerator::MAX; i++)
 	{
 		for (int j = 0; j < MazeGenerator::MAX; j++)
@@ -14,118 +14,117 @@ AStar::AStar(char playfield[MazeGenerator::MAX][MazeGenerator::MAX]) {
 	}
 }
 
-void AStar::add(Player player, int nx, int ny) {
-	Point placeHolder;
-	placeHolder.x = nx; 
-	placeHolder.y = ny;
+void AStar::add(Player player, int nx, int ny)	//Adds new Point to open-List
+{
+	Point placeHolder;		// Assign the
+	placeHolder.x = nx;		// new coordinate to
+	placeHolder.y = ny;		// a placeholder
 
-	int i = 0;
+	placeHolder.toStart = player.toStart + 1;	// Inherit previous toStart
+	placeHolder.toEnd = sqrt(((end.x - placeHolder.x) * (end.x - placeHolder.x)) + ((end.y - placeHolder.y) * (end.y - placeHolder.y)));	// Linear distance to goal
+
+	placeHolder.value = placeHolder.toStart + placeHolder.toEnd;
+	placeHolder.belegt = 1;
+
+	placeHolder.xB = player.posX;	// Inherit previous
+	placeHolder.yB = player.posY;	// position
+							
 	bool stay = true;
-	while (stay) {
-		if (open[i].belegt == 0) {
+	int i = 0;
+
+	// Look for open spot in open
+	while (stay)
+	{
+		if (open[i].belegt == 0)
+		{
 			stay = false;
 			continue;
 		}
 		i++;
 	}
-	open[i] = placeHolder;
-
-	open[i].toStart = player.toStart + 1;
-	open[i].toEnd = sqrt(((end.x - open[i].x) * (end.x - open[i].x)) + ((end.y - open[i].y) * (end.y - open[i].y)));	//Luftlinie zum Ziel
-
-	open[i].value = open[i].toStart + open[i].toEnd;
-	open[i].belegt = 1;
-	open[i].xB = player.posX;
-	open[i].yB = player.posY;
-}
-
-void AStar::swap(int index1, int index2) {
-	Point temp = open[index1];
-	open[index1] = open[index2];
-	open[index2] = temp;
-}
-
-void AStar::sort(int length) {
-	int flag = 0;
-
-	for (int i = 0; i < length; i++) {
-		if ((open[i].belegt == 0 && open[i + 1].belegt != 0) || (open[i].value > open[i + 1].value && open[i + 1].belegt != 0) || (open[i].value == open[i + 1].value && open[i].toEnd > open[i + 1].toEnd)) {
-			
-			swap(i, i + 1);
-			flag++;
-
-		}
-	}
-	if (flag != 0) {
-		sort(length - 1);
-	}
-
+	
+	open[i] = placeHolder;	// Assign placeholder to opne spot
 
 }
 
-bool AStar::isIn(int x, int y) {
-	for (int i = 0; i < (tryit); i++) {
-		if (x == open[i].x && y == open[i].y || x == closed[i].x && y == closed[i].y) {
+
+bool AStar::isIn(int x, int y)	// Checks  if coordinate already exits in any List
+{
+	for (int i = 0; i < (tryit); i++)
+	{
+		if (x == open[i].x && y == open[i].y || x == closed[i].x && y == closed[i].y)
+		{
 			return true;
 		}
 	}
 	return false;
 }
 
-void AStar::zeichne_spielfeld()
+void AStar::printPlayfield()	// Prints maze
 {
-	// Belegung des Arrays spielfeld
 	for (int i = 0; i < MazeGenerator::MAX; i++)
 	{
 		for (int j = 0; j < MazeGenerator::MAX; j++)
 		{
-			//SCHAUEN
 			gotoxy(i, j);
 			printf("%c", playfield[i][j]);
 		}
 	}
 }
 
-Point AStar::findBestes()
+Point AStar::findBestes()	// Looks for best Point in open-list
 {
-	Point usage;
-	usage.value = 9999999;
-	usage.toEnd = 9999999;
+	Point placeholder;
+	placeholder.value = 9999999;
+	placeholder.toEnd = 9999999;
 	int g = 1;
-	for (int i = 0; i < (tryit); i++) {
-		if (open[i].value < usage.value && open[i].belegt != 0) {
-			usage = open[i];
+	for (int i = 0; i < (tryit); i++)
+	{
+		if (open[i].value < placeholder.value && open[i].belegt != 0)	// Check if current value is lower than placeholder's
+		{
+			placeholder = open[i];	
 			g = i;
 
 		}
-		else if (open[i].value == usage.value && open[i].belegt != 0)
+		else if (open[i].value == placeholder.value && open[i].belegt != 0)	// Check if value is the same 
 		{
-			if (open[i].toEnd < usage.toEnd) {
-				usage = open[i];
+			if (open[i].toEnd < placeholder.toEnd)	// Check if toEnd is smaller 
+			{
+				placeholder = open[i];
 				g = i;
 			}
 		}
 	}
-	open[g].belegt = 0;
-	return usage;
+	open[g].belegt = 0;	// Mark as open
+	return placeholder;
 }
 
-void AStar::backtrack() {
-	Point point;
+void AStar::backtrack()	// Prints shortest way from end to start
+{
+	Point placeholder;
 	closed[0].belegt = 1;
-	for (int i = 0; i < (tryit) / 2; i++) {
-		if (closed[i].belegt == 0) {
-			point = closed[i - 1];
+	for (int i = 0; i < (tryit) / 2; i++)	
+	{
+		if (closed[i].belegt == 0)	
+		{
+			placeholder = closed[i - 1];	// Last Point
 			break;
 
 		}
 	}
-	while (point.x != start.x || point.y != start.y) {
-		gotoxy(point.x, point.y);
+
+	while (placeholder.x != start.x || placeholder.y != start.y)	// While current position is not start
+	{
+		// Print path-piece
+		gotoxy(placeholder.x, placeholder.y);
 		printf("%c", 219);
-		for (int i = 0; i < (tryit); i++) {
-			if (closed[i].x == point.xB && closed[i].y == point.yB) {
-				point = closed[i];
+
+		//Look for previous-point
+		for (int i = 0; i < (tryit); i++)
+		{
+			if (closed[i].x == placeholder.xB && closed[i].y == placeholder.yB)
+			{
+				placeholder = closed[i];
 				break;
 			}
 		}
@@ -135,17 +134,21 @@ void AStar::backtrack() {
 
 }
 
-int AStar::find() {
-	zeichne_spielfeld();
+int AStar::find()	// A* Algorithm
+{
+	printPlayfield();
 
+	// Create start point values
 	start.x = 1;
 	start.y = 1;
 	start.belegt = 1;
 
-
+	// Create end point values
 	end.x = MazeGenerator::MAX - 2;
 	end.y = MazeGenerator::MAX - 2;
 
+
+	// Create Player
 	Player player;
 	player.posX = start.x;
 	player.posY = start.y;
@@ -155,81 +158,68 @@ int AStar::find() {
 	closed[0] = start;
 	closed[1] = start;
 
-	int actually = 1;
 
-	Point blank;
+	int current = 1;	// Latest closed list pos
 
 
-	/*gotoxy(start.x, start.y);
-	printf("%c", 219);
-	gotoxy(end.x, end.y);
-	printf("%c", 219);*/
+	int timerino = clock();	// Get current time for time measure
+	while (true)
+	{
+		
 
-	int timerino = clock();
-	while (true) {
-		//wait_milliseconds(1);
-		if (playfield[player.posX][player.posY + 1] != SQUARE_CODE && !isIn(player.posX, player.posY + 1)) {
+		// Look for empty points around current pos and add them to open
+		if (playfield[player.posX][player.posY + 1] != SQUARE_CODE && !isIn(player.posX, player.posY + 1))
+		{
 			add(player, player.posX, player.posY + 1);
-		}if (playfield[player.posX][player.posY - 1] != SQUARE_CODE && !isIn(player.posX, player.posY - 1)) {
+		}
+		if (playfield[player.posX][player.posY - 1] != SQUARE_CODE && !isIn(player.posX, player.posY - 1))
+		{
 			add(player, player.posX, player.posY - 1);
-		}if (playfield[player.posX - 1][player.posY] != SQUARE_CODE && !isIn(player.posX - 1, player.posY)) {
+		}
+		if (playfield[player.posX - 1][player.posY] != SQUARE_CODE && !isIn(player.posX - 1, player.posY))
+		{
 			add(player, player.posX - 1, player.posY);
-		}if (playfield[player.posX + 1][player.posY] != SQUARE_CODE && !isIn(player.posX + 1, player.posY)) {
+		}
+		if (playfield[player.posX + 1][player.posY] != SQUARE_CODE && !isIn(player.posX + 1, player.posY))
+		{
 			add(player, player.posX + 1, player.posY);
 		}
-		/*gotoxy(player.posX, player.posY);
-		printf("%c", BLANK_CODE);*/
 
-		//sort((tryit));
 
-		/*if (open[0].belegt == 0 && open[1].belegt == 0) {
-			return false;
-		}*/
-		if (!IsSomethingInThatArray()) {
-			return false;
+		if (!IsSomethingInOpen())
+		{
+			return false;	// There is no path to end
 		}
 
 		
-		closed[actually] = findBestes();
+		closed[current] = findBestes();			// Add best Point of the open-list to the closed-list
+		
 
-		player.posX = closed[actually].x;
-		player.posY = closed[actually].y;
-		player.toStart = closed[actually].toStart;
-		actually++;
+		// Assign best point to player
+		player.posX = closed[current].x;			
+		player.posY = closed[current].y;			
+		player.toStart = closed[current].toStart;	
+		current++;									// Update new latest pos in closed
 
 
-		/*gotoxy(player.posX, player.posY);
-		printf("*");*/
-
-		if (player.posX == end.x && player.posY == end.y) {
+		if (player.posX == end.x && player.posY == end.y)	// Print shortest Path if end is reached
+		{
 			backtrack();
-			return clock() - timerino;
+			return clock() - timerino;	// Return needed Time
 		}
 
 	}
-	
+
 
 }
 
-//void AStar::gotoxy(int x, int y)
-//{
-//	HANDLE hCon = GetStdHandle(STD_OUTPUT_HANDLE);
-//	COORD pos;
-//	pos.X = x;
-//	pos.Y = y;
-//	SetConsoleCursorPosition(hCon, pos);
-//}
 
-void AStar::wait_milliseconds(int d_milliseconds) 		/* Zeitverzoegerung */
+bool AStar::IsSomethingInOpen()	// Checks if open is empty
 {
-	clock_t endwait;
-	endwait = clock() + d_milliseconds * CLK_TCK / 1000;
-	while (clock() < endwait) {}
-}
-
-bool AStar::IsSomethingInThatArray() {
-	for (int i = 0; i < tryit; i++) {
-		if (open[i].belegt == 1) {
+	for (int i = 0; i < tryit; i++)
+	{
+		if (open[i].belegt == 1)
+		{
 			return true;
 		}
 	}

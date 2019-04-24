@@ -6,58 +6,42 @@
 #include "MazeGenerator.h"
 #include "RandomPathFinder.h"
 
-char playfield[MazeGenerator::MAX][MazeGenerator::MAX] = {};/* = {
-
-"	aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa ",
-"a   a               a               a           a                   a   a",
-"a   a   aaaaaaaaa   a   aaaaa   aaaaaaaaa   aaaaa   aaaaa   aaaaa   a   a",
-"a               a       a   a           a           a   a   a       a   a",
-"aaaaaaaaa   a   aaaaaaaaa   aaaaaaaaa   aaaaa   a   a   a   aaaaaaaaa   a",
-"a       a   a               a           a   a   a   a   a           a   a",
-"a   a   aaaaaaaaaaaaa   a   a   aaaaaaaaa   aaaaa   a   aaaaaaaaa   a   a",
-"a   a               a   a   a       a           a           a       a   a",
-"a   aaaaaaaaaaaaa   aaaaa   aaaaa   a   aaaaa   aaaaaaaaa   a   aaaaa   a",
-"a           a       a   a       a   a       a           a   a           a",
-"a   aaaaa   aaaaa   a   aaaaa   a   aaaaaaaaa   a   a   a   aaaaaaaaaaaaa",
-"a       a       a   a   a       a       a       a   a   a       a       a",
-"aaaaaaaaaaaaa   a   a   a   aaaaaaaaa   a   aaaaa   a   aaaaa   aaaaa   a",
-"a           a   a           a       a   a       a   a       a           a",
-"a   aaaaa   a   aaaaaaaaa   aaaaa   a   aaaaa   aaaaa   aaaaaaaaaaaaa   a",
-"a   a       a           a           a       a   a   a               a   a",
-"a   a   aaaaaaaaa   a   aaaaa   aaaaaaaaa   a   a   aaaaaaaaaaaaa   a   a",
-"a   a           a   a   a   a   a           a               a   a       a",
-"a   aaaaaaaaa   a   a   a   aaaaa   aaaaaaaaa   aaaaaaaaa   a   aaaaaaaaa",
-"a   a       a   a   a           a           a   a       a               a",
-"a   a   aaaaa   aaaaa   aaaaa   aaaaaaaaa   aaaaa   a   aaaaaaaaa   a   a",
-"a   a                   a           a               a               a   a",
-"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+char playfield[MazeGenerator::MAX][MazeGenerator::MAX] = {};	// Empty maze Array
 
 
+int main()
+{
 
-};*/
+	int algTime = 0;	// Variable for the needed time of the A* algorithm
+	int randTime = 0;	// Variable for the needed time of the random pathfinder
 
-int main() {
+	//Preparing the console
+	fc::setWindowSize(1600, 1200);	// Set console size
+	fc::setFontSize(10, 10);		// Set font size
+	system("cls");					// Clear screen of previous logs
+
+	//Creating the maze
+	MazeGenerator generator;		// Create maze generator object
+	generator.create(playfield);	// Generate maze into Array
 
 
-	fc::setWindowSize(1200, 1200);
-	fc::setFontSize(10, 10);
+	//Run A* Algorithm
+	AStar finder(playfield);		// Create algorithm object
+	algTime = finder.find();	// search for shortest path & return needed time
 
-	system("cls");
-	
-	MazeGenerator generator;
-	generator.create(playfield);
-	AStar finder(playfield);
-	int randTime = finder.find();
-	//MazeGenerator::gotoxy( MazeGenerator::MAX + 3, 3);
-	gotoxy( MazeGenerator::MAX + 3, 3);
-	std::cout << "Algorithm Time:" << randTime << " MiliSec.";
+	//Display the needed algorithm time
+	gotoxy(MazeGenerator::MAX + 3, 3);
+	std::cout << "Algorithm Time:" << algTime << " MiliSec.	Press Enter";
 	std::cin.ignore();
 
-	RandomPathFinder randFinder(playfield);
-	randTime = randFinder.find();
-	//MazeGenerator::gotoxy( MazeGenerator::MAX + 3, 5);
-	gotoxy( MazeGenerator::MAX + 3, 5);
-	std::cout << "Random Time " << randTime << " MiliSec.";
+
+	//Run random pathfinder
+	RandomPathFinder randFinder(playfield);	// Create random pathfinder object
+	randTime = randFinder.find();			// search the exit using random pathfinding & return needed time
+
+	//Display the needed random path time
+	gotoxy(MazeGenerator::MAX + 3, 5);
+	std::cout << "Random Time " << randTime << " MiliSec.	Press Enter";
 	std::cin.ignore();
 
 

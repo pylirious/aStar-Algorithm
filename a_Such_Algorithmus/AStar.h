@@ -8,46 +8,45 @@
 
 
 //struct Point
-struct Point {
+struct Point
+{
 	int x = 0, y = 0, belegt = 0;
 	float value = 0, toStart = 0, toEnd = 0;
 	int xB = 0, yB = 0;
-	
+
 };
 //struct Player
-struct Player {
+struct Player
+{
 	int posX, posY;
 	float toStart;
 };
 
 //class AStar algorithm
-class AStar {
+class AStar
+{
 public:
 
-	int tryit = MazeGenerator::MAX * MazeGenerator::MAX- 1;
+	AStar(char playfield[MazeGenerator::MAX][MazeGenerator::MAX]);	// Constructor
 
-	AStar(char playfield[MazeGenerator::MAX][MazeGenerator::MAX]);
+	int tryit = MazeGenerator::MAX * MazeGenerator::MAX - 1;	// Max index of open and closed list
 
-	static const int SQUARE_CODE = 'a';
-	static const char BLANK_CODE = ' ';
+
+	static const int SQUARE_CODE = 'a';	// Wall-character
+	static const char BLANK_CODE = ' ';	// Blank character
 
 	void add(Player player, int nx, int ny);
-	void swap(int index1, int index2);
-	void sort(int length);
 	bool isIn(int x, int y);
-	void zeichne_spielfeld();
+	void printPlayfield();
 	Point findBestes();
 	void backtrack();
 	int find();
-	//void gotoxy(int x, int y);
-	void wait_milliseconds(int d_milliseconds);
-
-	bool IsSomethingInThatArray();
+	bool IsSomethingInOpen();
 
 private:
-	Point open[(MazeGenerator::MAX * MazeGenerator::MAX)];
-	Point closed[(MazeGenerator::MAX * MazeGenerator::MAX)];
+	Point open[(MazeGenerator::MAX * MazeGenerator::MAX)];	// Open-List: A list of 'known' points with calculated Values	
+	Point closed[(MazeGenerator::MAX * MazeGenerator::MAX)];	// Closed-List: A list of 'used' points of the open-list
 	Point start;
 	Point end;
-	char playfield[MazeGenerator::MAX][MazeGenerator::MAX];
+	char playfield[MazeGenerator::MAX][MazeGenerator::MAX];	// The blank class-maze
 };

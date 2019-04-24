@@ -4,13 +4,14 @@
 #include <iostream>
 
 //Random Pathfinder algorithm
-class RandomPathFinder {
+class RandomPathFinder
+{
 public:
-	RandomPathFinder(char playfield[MazeGenerator::MAX][MazeGenerator::MAX]);
+	RandomPathFinder(char playfield[MazeGenerator::MAX][MazeGenerator::MAX]);	// Constructor
 
 	int find();
-	
+
 private:
 
-	char playfield[MazeGenerator::MAX][MazeGenerator::MAX];
+	char playfield[MazeGenerator::MAX][MazeGenerator::MAX];	// The blank class-maze
 };
